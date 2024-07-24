@@ -88,5 +88,32 @@ spring boot项目在启动的时候，会扫描启动类所在的包及其子包
 
 如果要注册的bean对象来自第三方组件（不是自定义的），是无法使用@Component以及衍生注解的，spring提供了@Bean和@Import注解解决这个问题
 
+（1）@Bean方法
+
+新建一个包config，新建一个CommonConfig类，CommonConfig要加上@Configuration注解，写一个方法，返回类型是需要注入的类，然后在这个方法上添加@Bean注解即可，Bean对象的默认名字就是方法名，如果需要自己定义，@Bean("bean名称")
+
+```java
+@Configuration
+public class CommonConfig {
+
+    @Bean
+    public FileTestUtil fileTestUtil() {
+        return new FileTestUtil();
+    }
+
+    /**
+     * 如果方法内部需要使用ioc容器中已经存在的bean对象，只需要在方法上声明即可，spring会自动注入
+     * @param fileTestUtil
+     * @return
+     */
+    @Bean("fff")
+    public CoreTestConstants coreTestConstants(FileTestUtil fileTestUtil) {
+        System.out.println(fileTestUtil);
+        return new CoreTestConstants();
+    }
+}
+```
 
 
+
+（2）@Import方法
