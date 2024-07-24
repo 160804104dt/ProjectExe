@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="springboot-create-manual" />
+        <module name="springboot-bean-register" />
         <module name="springboot-mybatis" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot-bean-register" options="-parameters" />
       <module name="springboot-create-manual" options="-parameters" />
       <module name="springboot-mybatis" options="-parameters" />
     </option>
