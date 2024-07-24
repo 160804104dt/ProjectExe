@@ -1,0 +1,13 @@
+server:
+  port: 9000
+
+#自定义配置信息
+user:
+  username: dingtao
+  age: 19
+
+#数组配置
+hobbies:
+  - 打篮球
+  - 打豆豆
+  - 打游戏
