@@ -30,10 +30,10 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public Result register(@Pattern(regexp = "^\\S{5,16}$") String userName, @Pattern(regexp = "^\\S{5,16}$")String password) {
-        User user = userService.findByUserName(userName);
+    public Result register(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$")String password) {
+        User user = userService.findByUserName(username);
         if (user == null) {
-            userService.register(userName,password);
+            userService.register(username,password);
             return Result.success();
         }
         else {
