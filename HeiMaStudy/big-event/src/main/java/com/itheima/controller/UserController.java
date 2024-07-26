@@ -49,7 +49,6 @@ public class UserController {
         if(Md5Util.getMD5String(password).equals(loginUser.getPassword())){
             return Result.success("jwt token");
         }
-
         return  Result.error("密码错误");
     }
 }
