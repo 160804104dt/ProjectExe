@@ -182,7 +182,7 @@ public class UserController {
 //pattern不符合的时候，会抛出一个异常
 ```
 
-参数校验失败异常处理，定义一个全局异常处理器
+**参数校验失败异常处理，定义一个全局异常处理器**
 
 ```java
 @RestControllerAdvice
@@ -199,3 +199,26 @@ public class GlobalExceptionHandler {
 //@ExceptionHandler(Exception.class)扫描到所有异常类型
 ```
 
+**登录认证**
+
+要求：
+
+承载业务数据，减少后续请求查询数据库的次数
+
+防篡改，保证信息的合法性和有效性
+
+**JWT令牌**
+
+- 全称：json web token
+
+- 定义了一种简洁的，自包含的格式，用于通信双方以json的数据格式安全的传输信息
+
+- 组成：
+
+​		第一部分：Header（头），记录令牌类型，签名算法等，例如{"alg":"HS256","type":"JWT"}
+
+​		第二部分：Payload（有效载荷），携带一些自定义信息，默认信息等，例如{"id":"1","username":"Tom"}，不要存放私密数据
+
+​		第三部分：Signature（签名），防止Token被篡改，确保安全性，将header，payload，并加入指定密钥，通过指定签名算法计算而来
+
+通过Base64编码方式将字符串编码成字符串
