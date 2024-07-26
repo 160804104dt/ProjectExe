@@ -3,6 +3,7 @@ package com.itheima.controller;
 import com.itheima.pojo.Result;
 import com.itheima.pojo.User;
 import com.itheima.service.UserService;
+import com.itheima.utils.Md5Util;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.validation.annotation.Validated;
@@ -34,5 +35,21 @@ public class UserController {
         else {
             return Result.error("用户名已被占用");
         }
+    }
+
+    @PostMapping("/login")
+    public Result login(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$")String password){
+        //根据用户名查询用户
+        User loginUser = userService.findByUserName(username);
+        //判断用户是否存在
+        if(loginUser == null){
+            return Result.error("用户不存在");
+        }
+        //判断密码是否正确，注意加密
+        if(Md5Util.getMD5String(password).equals(loginUser.getPassword())){
+            return Result.success("jwt token");
+        }
+
+        return  Result.error("密码错误");
     }
 }
