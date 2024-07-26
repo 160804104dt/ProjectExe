@@ -10,6 +10,7 @@
         <module name="springboot-auto-config" />
         <module name="springboot-mybatis" />
         <module name="springboot-bean-register" />
+        <module name="springboot-javaee-exercise" />
       </profile>
     </annotationProcessing>
   </component>
