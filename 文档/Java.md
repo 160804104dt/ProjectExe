@@ -356,3 +356,58 @@ private void ensureExplicitCapacity(int minCapacity) {
 
 # 三、Java注解
 
+---
+
+# 四、常用方法
+
+---
+
+# 五、枚举使用
+
+Java枚举用来定义一组固定的常量，枚举是一个类，可以拥有方法和字段，可以实现接口，但不能继承其他类。
+
+```java
+public enum MonthEnum{
+    January,
+    February,
+    March,
+    April,
+    May,
+    June,
+    July,
+    August,
+    September,
+    October,
+    November,
+    December
+}
+//可以调用ordinal()方法获得默认的排序值
+//也可以通过添加字段，构造方法来给枚举设置值
+public enum WeekEnum {
+    Monday(1,"星期一"),
+    Tuesday(2,"星期二"),
+    Wendesday(3,"星期三");
+
+    private int code;
+    private String description;
+
+    WeekEnum(){
+
+    }
+
+    WeekEnum(int code, String description){
+        this.code = code;
+        this.description = description;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
+
+```
+

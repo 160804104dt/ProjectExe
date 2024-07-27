@@ -1,5 +1,6 @@
 package com.itheima.controller;
 
+import com.auth0.jwt.JWT;
 import com.itheima.pojo.Result;
 import com.itheima.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,21 +17,13 @@ import java.util.Map;
  * @author dingtao
  * @date 2024/7/26 15:17
  */
+
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
 
     @GetMapping("/list")
-    public Result<String> list(@RequestHeader(name = "Authorization") String token, HttpServletResponse response){
-
-        try {
-            //验证token
-            Map<String, Object> claims = JwtUtil.parseToken(token);
-        } catch (Exception e) {
-            response.setStatus(401);
-            return Result.error("未登录");
-        }
-
-        return Result.success("所有的文章数据");
+    public Result<String> list(){
+        return Result.success("所有文章数据。。。");
     }
 }
