@@ -13,4 +13,11 @@ public interface UserService {
 
     //注册
     void register(String userName, String password);
+
+    //更新
+    void update(User user);
+
+    void updateAvatar(String picUrl);
+
+    void updatePwd(String newPwd, Integer id);
 }

@@ -199,6 +199,8 @@ public class GlobalExceptionHandler {
 //@ExceptionHandler(Exception.class)扫描到所有异常类型
 ```
 
+---
+
 **登录认证**
 
 要求：
@@ -206,6 +208,8 @@ public class GlobalExceptionHandler {
 承载业务数据，减少后续请求查询数据库的次数
 
 防篡改，保证信息的合法性和有效性
+
+---
 
 **JWT令牌**
 
@@ -222,3 +226,60 @@ public class GlobalExceptionHandler {
 ​		第三部分：Signature（签名），防止Token被篡改，确保安全性，将header，payload，并加入指定密钥，通过指定签名算法计算而来
 
 通过Base64编码方式将字符串编码成字符串
+
+因为所有请求基本上都需要认证，可以配置一个拦截器，需要定义一个类实现HandlerInterceptor接口，并且重写preHandle方法，在preHandle方法中对token进行验证，如果通过，返回true，如果验证没有通过，返回false，将状态码设置成401。然后写一个web配置类，实现WebMvcConfigurer接口，重写addInterceptors方法，将刚刚的拦截器配置进去，这个地方要注意，登录和注册的接口不应该拦截，要放行
+
+```java
+//配置拦截器
+@Component
+public class LoginInterceptor  implements HandlerInterceptor {
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //令牌验证
+        String token = request.getHeader("Authorization");
+        try {
+            //验证token
+            Map<String, Object> claims = JwtUtil.parseToken(token);
+            return true;
+        } catch (Exception e) {
+            //不放行
+            response.setStatus(401);
+            return false;
+        }
+    }
+}
+
+//将拦截器配置到webConfig中
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //登录和注册不拦截
+        registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login","/user/register");
+    }
+
+}
+```
+
+---
+
+**获取用户详细信息**
+
+ThreadLocal提供线程局部变量
+
+用来存储数据：set，get
+
+使用ThreadLocal存储的数据是线程安全的
+
+在登录后在拦截器里将用户名等信息存储到ThreadLocal里，可以供其他请求一起使用
+
+用完要调用remove方法释放，不然可能会发生内存泄漏
+
+---
+
+**更新用户基本信息**
