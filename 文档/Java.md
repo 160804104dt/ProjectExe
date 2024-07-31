@@ -356,6 +356,13 @@ private void ensureExplicitCapacity(int minCapacity) {
 
 # 三、Java注解
 
+```java
+@RestController
+
+```
+
+
+
 ---
 
 # 四、常用方法
