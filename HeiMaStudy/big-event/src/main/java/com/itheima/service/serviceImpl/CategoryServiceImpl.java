@@ -2,6 +2,7 @@ package com.itheima.service.serviceImpl;
 
 import com.itheima.mapper.CategoryMapper;
 import com.itheima.pojo.Category;
+import com.itheima.pojo.Result;
 import com.itheima.service.CategoryService;
 import com.itheima.utils.JwtUtil;
 import com.itheima.utils.ThreadLocalUtil;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,5 +36,18 @@ public class CategoryServiceImpl implements CategoryService {
         category.setCreateUser(userId);
 
         categoryMapper.add(category);
+    }
+
+    @Override
+    public List<Category> GetCategoryList() {
+
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        return categoryMapper.GetCategoryList(userId);
+    }
+
+    @Override
+    public Category CategoryDetail(Integer id) {
+        return categoryMapper.CategoryDetail(id);
     }
 }

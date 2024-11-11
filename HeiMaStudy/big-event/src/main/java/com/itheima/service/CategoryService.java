@@ -1,6 +1,9 @@
 package com.itheima.service;
 
 import com.itheima.pojo.Category;
+import com.itheima.pojo.Result;
+
+import java.util.List;
 
 /**
  * CategoryService
@@ -10,4 +13,8 @@ import com.itheima.pojo.Category;
  */
 public interface CategoryService {
     void addCategory(Category category);
+
+    List<Category> GetCategoryList();
+
+    Category CategoryDetail(Integer id);
 }
